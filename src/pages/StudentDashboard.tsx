@@ -18,7 +18,7 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
       <div className="space-y-8">
         {/* Welcome Section */}
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold mb-2">Good morning, Alex! ☀️</h2>
+          <h2 className="text-3xl font-bold mb-2">Good morning, Vaishnavi!</h2>
           <p className="text-lg text-muted-foreground">
             Ready to make today productive? Here's your personalized overview.
           </p>

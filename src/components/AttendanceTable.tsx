@@ -4,12 +4,12 @@ import { Users, Check, X, Clock } from 'lucide-react';
 
 const AttendanceTable = () => {
   const students = [
-    { id: 1, name: 'Alice Johnson', email: 'alice@school.edu', status: 'present', time: '09:15 AM' },
-    { id: 2, name: 'Bob Smith', email: 'bob@school.edu', status: 'present', time: '09:12 AM' },
-    { id: 3, name: 'Charlie Brown', email: 'charlie@school.edu', status: 'absent', time: '-' },
-    { id: 4, name: 'Diana Prince', email: 'diana@school.edu', status: 'present', time: '09:18 AM' },
-    { id: 5, name: 'Ethan Hunt', email: 'ethan@school.edu', status: 'late', time: '09:25 AM' },
-    { id: 6, name: 'Fiona Gallagher', email: 'fiona@school.edu', status: 'present', time: '09:10 AM' },
+    { id: 1, name: 'Alice Johnson', email: 'alice@vce.ac.in', status: 'present', time: '09:15 AM' },
+    { id: 2, name: 'Bob Smith', email: 'bob@vce.ac.in', status: 'present', time: '09:12 AM' },
+    { id: 3, name: 'Charlie Brown', email: 'charlie@vce.ac.in', status: 'absent', time: '-' },
+    { id: 4, name: 'Diana Prince', email: 'diana@vce.ac.in', status: 'present', time: '09:18 AM' },
+    { id: 5, name: 'Ethan Hunt', email: 'ethan@vce.ac.in', status: 'late', time: '09:25 AM' },
+    { id: 6, name: 'Fiona Gallagher', email: 'fiona@vce.ac.in', status: 'present', time: '09:10 AM' },
   ];
 
   const presentCount = students.filter(s => s.status === 'present').length;
