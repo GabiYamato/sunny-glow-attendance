@@ -30,11 +30,11 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
         
         <div className="grid grid-cols-1 gap-4">
           <Card 
-            className="p-6 cursor-pointer transition-all hover:shadow-warm hover:scale-105 bg-gradient-glow border-primary/20"
+            className="p-6 cursor-pointer transition-all hover:shadow-elevated hover:scale-105 bg-professional-card border-border/50"
             onClick={() => setSelectedRole('teacher')}
           >
             <div className="text-center">
-              <UserCircle className="h-12 w-12 mx-auto mb-3 text-primary" />
+              <UserCircle className="h-12 w-12 mx-auto mb-3 text-professional-accent" />
               <h3 className="font-semibold text-lg">Teacher Login</h3>
               <p className="text-sm text-muted-foreground mt-1">
                 Manage attendance and class analytics
@@ -43,7 +43,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
           </Card>
           
           <Card 
-            className="p-6 cursor-pointer transition-all hover:shadow-warm hover:scale-105 bg-gradient-glow border-primary/20"
+            className="p-6 cursor-pointer transition-all hover:shadow-elevated hover:scale-105 bg-professional-card border-border/50"
             onClick={() => setSelectedRole('student')}
           >
             <div className="text-center">
@@ -107,7 +107,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
 
       <Button 
         type="submit" 
-        className="w-full bg-gradient-sunny hover:shadow-warm transition-all"
+        className="w-full bg-professional-accent hover:bg-professional-accent/90 text-white shadow-professional transition-all"
       >
         Sign In
       </Button>

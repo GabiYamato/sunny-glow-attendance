@@ -32,16 +32,16 @@ const TeacherDashboard = ({ onLogout }: TeacherDashboardProps) => {
           {/* Quick Stats */}
           <div className="lg:col-span-2">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
-              <div className="bg-gradient-glow border-primary/20 shadow-warm rounded-lg p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">24</div>
+              <div className="bg-professional-card border border-border/50 shadow-professional rounded-lg p-6 text-center">
+                <div className="text-3xl font-bold text-professional-accent mb-2">24</div>
                 <div className="text-sm text-muted-foreground">Students Present</div>
               </div>
-              <div className="bg-gradient-glow border-primary/20 shadow-warm rounded-lg p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">86%</div>
+              <div className="bg-professional-card border border-border/50 shadow-professional rounded-lg p-6 text-center">
+                <div className="text-3xl font-bold text-professional-accent mb-2">86%</div>
                 <div className="text-sm text-muted-foreground">Attendance Rate</div>
               </div>
-              <div className="bg-gradient-glow border-primary/20 shadow-warm rounded-lg p-6 text-center">
-                <div className="text-3xl font-bold text-primary mb-2">28</div>
+              <div className="bg-professional-card border border-border/50 shadow-professional rounded-lg p-6 text-center">
+                <div className="text-3xl font-bold text-professional-accent mb-2">28</div>
                 <div className="text-sm text-muted-foreground">Total Students</div>
               </div>
             </div>

@@ -67,15 +67,15 @@ export default {
           ring: "hsl(var(--sidebar-ring))",
         },
       },
-      backgroundImage: {
-        'gradient-sunny': 'var(--gradient-sunny)',
-        'gradient-warm': 'var(--gradient-warm)',
-        'gradient-glow': 'var(--gradient-glow)',
+      backgroundColor: {
+        'professional': 'var(--professional-bg)',
+        'professional-card': 'var(--professional-card)',
+        'professional-accent': 'var(--professional-accent)',
       },
       boxShadow: {
-        'warm': 'var(--shadow-warm)',
+        'professional': 'var(--shadow-professional)', 
         'card': 'var(--shadow-card)',
-        'glow': 'var(--shadow-glow)',
+        'elevated': 'var(--shadow-elevated)',
       },
       borderRadius: {
         lg: "var(--radius)",

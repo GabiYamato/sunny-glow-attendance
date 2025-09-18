@@ -65,10 +65,10 @@ const PersonalSuggestions = () => {
   return (
     <div className="space-y-6">
       {/* Suggestions */}
-      <Card className="bg-gradient-glow border-primary/20 shadow-warm">
+      <Card className="bg-professional-card border border-border/50 shadow-elevated">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
-            <Lightbulb className="h-5 w-5 text-primary" />
+            <Lightbulb className="h-5 w-5 text-professional-accent" />
             <span>Smart Suggestions</span>
           </CardTitle>
         </CardHeader>

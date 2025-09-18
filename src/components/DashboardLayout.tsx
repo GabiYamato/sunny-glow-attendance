@@ -11,9 +11,9 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, title, userRole, onLogout }: DashboardLayoutProps) => {
   return (
-    <div className="min-h-screen bg-gradient-warm">
+    <div className="min-h-screen bg-professional">
       {/* Header */}
-      <header className="bg-card/80 backdrop-blur-sm border-b border-border/50 shadow-card">
+      <header className="bg-professional-card/95 backdrop-blur-sm border-b border-border/50 shadow-professional">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">

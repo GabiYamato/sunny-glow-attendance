@@ -47,19 +47,19 @@ All colors MUST be HSL for proper theming.
     --destructive-foreground: 0 0% 98%;
 
     /* Borders and inputs with warm tones */
-    --border: 45 50% 88%;
-    --input: 45 50% 92%;
-    --ring: 51 100% 50%;
+    --border: 220 13% 91%;
+    --input: 220 13% 94%;
+    --ring: 221 83% 53%;
 
-    /* Custom gradients */
-    --gradient-sunny: linear-gradient(135deg, hsl(51 100% 50%), hsl(50 100% 97%));
-    --gradient-warm: linear-gradient(180deg, hsl(51 100% 98%), hsl(45 100% 95%));
-    --gradient-glow: linear-gradient(135deg, hsl(51 100% 70%), hsl(51 100% 85%));
+    /* Professional backgrounds */
+    --professional-bg: hsl(220 13% 98%);
+    --professional-card: hsl(0 0% 100%);
+    --professional-accent: hsl(221 83% 53%);
 
-    /* Shadows with warm glow */
-    --shadow-warm: 0 4px 20px hsl(51 100% 50% / 0.15);
-    --shadow-card: 0 2px 10px hsl(51 50% 80% / 0.1);
-    --shadow-glow: 0 0 30px hsl(51 100% 70% / 0.3);
+    /* Professional shadows */
+    --shadow-professional: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 
     --radius: 0.75rem;
 
@@ -107,17 +107,17 @@ All colors MUST be HSL for proper theming.
     --destructive-foreground: 0 0% 98%;
 
     --border: 25 15% 20%;
-    --input: 25 15% 20%;
-    --ring: 51 100% 60%;
+    --input: 217 10% 25%;
+    --ring: 221 83% 53%;
 
-    /* Dark mode gradients */
-    --gradient-sunny: linear-gradient(135deg, hsl(51 100% 60%), hsl(25 25% 10%));
-    --gradient-warm: linear-gradient(180deg, hsl(25 25% 12%), hsl(25 15% 15%));
-    --gradient-glow: linear-gradient(135deg, hsl(51 100% 70%), hsl(51 80% 50%));
+    /* Professional dark mode backgrounds */
+    --professional-bg: hsl(222 84% 5%);
+    --professional-card: hsl(217 10% 14%);
+    --professional-accent: hsl(221 83% 53%);
 
-    --shadow-warm: 0 4px 20px hsl(51 100% 30% / 0.3);
-    --shadow-card: 0 2px 10px hsl(0 0% 0% / 0.3);
-    --shadow-glow: 0 0 30px hsl(51 100% 50% / 0.2);
+    --shadow-professional: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+    --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.3);
   }
 }
 

@@ -25,10 +25,10 @@ const QRCodeGenerator = () => {
   };
 
   return (
-    <Card className="bg-gradient-glow border-primary/20 shadow-warm">
+    <Card className="bg-professional-card border border-border/50 shadow-elevated">
       <CardHeader>
         <CardTitle className="flex items-center space-x-2">
-          <QrCode className="h-5 w-5 text-primary" />
+          <QrCode className="h-5 w-5 text-professional-accent" />
           <span>Attendance QR Code</span>
         </CardTitle>
       </CardHeader>
@@ -58,7 +58,7 @@ const QRCodeGenerator = () => {
           
           <Button 
             onClick={downloadQR}
-            className="bg-gradient-sunny hover:shadow-warm transition-all"
+            className="bg-professional-accent hover:bg-professional-accent/90 text-white shadow-professional transition-all"
           >
             <Download className="h-4 w-4 mr-2" />
             Download
