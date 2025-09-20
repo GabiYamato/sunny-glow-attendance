@@ -69,7 +69,7 @@ const PersonalSuggestions = () => {
         <CardHeader>
           <CardTitle className="flex items-center space-x-2">
             <Lightbulb className="h-5 w-5 text-professional-accent" />
-            <span>Smart Suggestions</span>
+            <span>Academic goal suggestions</span>
           </CardTitle>
         </CardHeader>
         <CardContent>

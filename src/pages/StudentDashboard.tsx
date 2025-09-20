@@ -2,7 +2,7 @@ import DashboardLayout from '@/components/DashboardLayout';
 import StudentSchedule from '@/components/StudentSchedule';
 import AttendanceStatus from '@/components/AttendanceStatus';
 import PersonalSuggestions from '@/components/PersonalSuggestions';
-import DailyRoutine from '@/components/DailyRoutine';
+// import DailyRoutine from '@/components/DailyRoutine';
 import StudentQRScanner from '@/components/StudentQRScanner';
 
 interface StudentDashboardProps {
