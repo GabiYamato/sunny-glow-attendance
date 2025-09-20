@@ -7,6 +7,9 @@ import Login from "./pages/Login";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
 import NotFound from "./pages/NotFound";
+import ScoreManagement from "./pages/ScoreManagement";
+import ClassStudents from "./pages/ClassStudents";
+import StudentScoreEdit from "./pages/StudentScoreEdit";
 
 const queryClient = new QueryClient();
 
@@ -25,7 +28,11 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Login />} />
+            <Route path="/teacher" element={<TeacherDashboard onLogout={handleLogout} />} />
             <Route path="/teacher-dashboard" element={<TeacherDashboard onLogout={handleLogout} />} />
+            <Route path="/teacher/score-management" element={<ScoreManagement onLogout={handleLogout} />} />
+            <Route path="/teacher/score-management/class/:classId" element={<ClassStudents onLogout={handleLogout} />} />
+            <Route path="/teacher/score-management/class/:classId/student/:studentId" element={<StudentScoreEdit onLogout={handleLogout} />} />
             <Route path="/student-dashboard" element={<StudentDashboard onLogout={handleLogout} />} />
             {/* Redirect any unknown routes to login */}
             <Route path="*" element={<Navigate to="/" replace />} />

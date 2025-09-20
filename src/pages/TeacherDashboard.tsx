@@ -4,13 +4,21 @@ import AttendanceTable from '@/components/AttendanceTable';
 import AttendanceChart from '@/components/AttendanceChart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
-import { TrendingUp, Users, Clock, Calendar } from 'lucide-react';
+import { TrendingUp, Users, Clock, Calendar, BookOpen } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 interface TeacherDashboardProps {
   onLogout: () => void;
 }
 
 const TeacherDashboard = ({ onLogout }: TeacherDashboardProps) => {
+  const navigate = useNavigate();
+
+  const handleScoreManagement = () => {
+    navigate('/teacher/score-management');
+  };
+
   // Sample data for charts
   const dailyAttendanceData = [
     { day: 'Mon', count: 22 },
@@ -46,6 +54,18 @@ const TeacherDashboard = ({ onLogout }: TeacherDashboardProps) => {
           <p className="text-lg text-muted-foreground">
             Manage your class attendance and track student progress
           </p>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="flex justify-center mb-8">
+          <Button 
+            onClick={handleScoreManagement}
+            className="bg-professional-accent hover:bg-professional-accent/90 text-white shadow-professional transition-all flex items-center space-x-2 px-6 py-3"
+            size="lg"
+          >
+            <BookOpen className="h-5 w-5" />
+            <span>Manage Student Scores</span>
+          </Button>
         </div>
 
         {/* QR Code Section */}

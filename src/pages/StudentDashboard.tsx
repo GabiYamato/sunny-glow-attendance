@@ -3,6 +3,7 @@ import StudentSchedule from '@/components/StudentSchedule';
 import AttendanceStatus from '@/components/AttendanceStatus';
 import PersonalSuggestions from '@/components/PersonalSuggestions';
 import DailyRoutine from '@/components/DailyRoutine';
+import StudentQRScanner from '@/components/StudentQRScanner';
 
 interface StudentDashboardProps {
   onLogout: () => void;
@@ -24,8 +25,11 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
           </p>
         </div>
 
-        {/* Top Section - Schedule and Attendance */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Top Section - QR Scanner and Schedule */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div>
+            <StudentQRScanner />
+          </div>
           <div>
             <StudentSchedule />
           </div>
@@ -41,10 +45,10 @@ const StudentDashboard = ({ onLogout }: StudentDashboardProps) => {
         </div>
 
         {/* Bottom Section - Daily Routine */}
-        <div>
+        {/* <div>
           <h3 className="text-2xl font-bold mb-6">Your Daily Timeline</h3>
           <DailyRoutine />
-        </div>
+        </div> */}
       </div>
     </DashboardLayout>
   );
