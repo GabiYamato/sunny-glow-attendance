@@ -5,9 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, User, Save, BookOpen, Trophy, AlertCircle } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, User, Save, BookOpen, Trophy, AlertCircle, Loader } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { useToast } from '@/hooks/use-toast';
+import { apiService } from '@/services/api';
 
 interface StudentScoreEditProps {
   onLogout: () => void;
@@ -25,36 +26,62 @@ const StudentScoreEdit = ({ onLogout }: StudentScoreEditProps) => {
   const { classId, studentId } = useParams<{ classId: string; studentId: string }>();
   const { toast } = useToast();
 
+  const [subjects, setSubjects] = useState<Subject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Mock student data - in real app, fetch from backend
+  const studentData = {
+    'student-1': { name: 'Rahul Sharma', rollNumber: '10A01' },
+    'student-2': { name: 'Priya Patel', rollNumber: '10A02' }
+  };
+
+  const currentStudent = studentData[studentId as keyof typeof studentData] || 
+    { name: `Student ${studentId}`, rollNumber: studentId || 'N/A' };
+
+  useEffect(() => {
+    const fetchStudentScores = async () => {
+      if (!studentId) return;
+      
+      try {
+        setLoading(true);
+        const response = await apiService.getStudentScores(studentId);
+        
+        if (response.status === 'success') {
+          // Transform API response to subject format
+          const transformedSubjects: Subject[] = Object.entries(response.scores).map(([subject, score]) => ({
+            id: subject.toLowerCase().replace(/\s+/g, '-'),
+            name: subject,
+            maxScore: 100,
+            currentScore: typeof score === 'number' ? score : 0
+          }));
+          
+          setSubjects(transformedSubjects);
+        }
+      } catch (err) {
+        setError('Failed to load student scores');
+        console.error('Error fetching scores:', err);
+        
+        // Fallback to mock data
+        setSubjects([
+          { id: 'math', name: 'Mathematics', maxScore: 100, currentScore: 88 },
+          { id: 'science', name: 'Science', maxScore: 100, currentScore: 92 },
+          { id: 'english', name: 'English', maxScore: 100, currentScore: 79 },
+          { id: 'physics', name: 'Physics', maxScore: 100, currentScore: 85 }
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStudentScores();
+  }, [studentId]);
+
   const handleBackToStudents = () => {
     navigate(`/teacher/score-management/class/${classId}`);
   };
-
-  // Mock student data
-  const studentData = {
-    'student-1': {
-      name: 'Rahul Sharma',
-      rollNumber: '10A01',
-      averageScore: 85.5
-    },
-    'student-2': {
-      name: 'Priya Patel',
-      rollNumber: '10A02',
-      averageScore: 78.2
-    }
-  };
-
-  const currentStudent = studentData[studentId as keyof typeof studentData];
-
-  // Mock subjects with scores
-  const [subjects, setSubjects] = useState<Subject[]>([
-    { id: 'math', name: 'Mathematics', maxScore: 100, currentScore: 88 },
-    { id: 'science', name: 'Science', maxScore: 100, currentScore: 92 },
-    { id: 'english', name: 'English', maxScore: 100, currentScore: 79 },
-    { id: 'history', name: 'History', maxScore: 100, currentScore: 83 }
-  ]);
-
-  const [isEditing, setIsEditing] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
 
   const handleScoreChange = (subjectId: string, newScore: string) => {
     const score = parseInt(newScore) || 0;
@@ -68,21 +95,40 @@ const StudentScoreEdit = ({ onLogout }: StudentScoreEditProps) => {
   };
 
   const handleSaveScores = async () => {
+    if (!studentId) return;
+    
     setIsSaving(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsEditing(false);
-    setIsSaving(false);
-    
-    toast({
-      title: "Scores Updated Successfully",
-      description: `Updated scores for ${currentStudent?.name}`,
-    });
+    try {
+      // Prepare scores for API
+      const scoresData = subjects.reduce((acc, subject) => {
+        acc[subject.name] = subject.currentScore;
+        return acc;
+      }, {} as Record<string, number>);
+      
+      const response = await apiService.enterScores(studentId, scoresData);
+      
+      if (response.status === 'success') {
+        setIsEditing(false);
+        toast({
+          title: "Scores Updated Successfully",
+          description: `Updated scores for ${currentStudent.name}`,
+        });
+      }
+    } catch (err) {
+      toast({
+        title: "Error",
+        description: "Failed to save scores. Please try again.",
+        variant: "destructive",
+      });
+      console.error('Error saving scores:', err);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   const calculateAverage = () => {
+    if (subjects.length === 0) return '0.0';
     const total = subjects.reduce((sum, subject) => sum + subject.currentScore, 0);
     return (total / subjects.length).toFixed(1);
   };
@@ -102,6 +148,40 @@ const StudentScoreEdit = ({ onLogout }: StudentScoreEditProps) => {
     if (percentage >= 60) return { text: 'Average', class: 'bg-yellow-100 text-yellow-800 border-yellow-300' };
     return { text: 'Needs Improvement', class: 'bg-red-100 text-red-800 border-red-300' };
   };
+
+  if (loading) {
+    return (
+      <DashboardLayout 
+        title="Edit Student Scores" 
+        userRole="teacher" 
+        onLogout={onLogout}
+      >
+        <div className="space-y-8">
+          <div className="flex items-center space-x-4">
+            <Button onClick={handleBackToStudents} variant="outline">
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Students
+            </Button>
+            <Loader className="h-5 w-5 animate-spin" />
+            <span>Loading student scores...</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[1, 2, 3, 4].map((i) => (
+              <Card key={i} className="animate-pulse">
+                <CardHeader>
+                  <div className="h-6 bg-muted rounded w-3/4"></div>
+                </CardHeader>
+                <CardContent>
+                  <div className="h-16 bg-muted rounded mb-4"></div>
+                  <div className="h-4 bg-muted rounded w-1/2"></div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout 

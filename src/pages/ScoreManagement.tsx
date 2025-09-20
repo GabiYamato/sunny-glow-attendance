@@ -2,7 +2,9 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { Users, ArrowLeft, BookOpen } from 'lucide-react';
+import { Users, ArrowLeft, BookOpen, Loader } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { apiService } from '@/services/api';
 
 interface ScoreManagementProps {
   onLogout: () => void;
@@ -10,6 +12,29 @@ interface ScoreManagementProps {
 
 const ScoreManagement = ({ onLogout }: ScoreManagementProps) => {
   const navigate = useNavigate();
+  const [allScores, setAllScores] = useState<Record<string, Record<string, number>> | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchAllScores = async () => {
+      try {
+        setLoading(true);
+        const response = await apiService.getAllScores();
+        
+        if (response.status === 'success') {
+          setAllScores(response.scores);
+        }
+      } catch (err) {
+        setError('Failed to load scores data');
+        console.error('Error fetching all scores:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAllScores();
+  }, []);
 
   const handleBackToDashboard = () => {
     navigate('/teacher');
@@ -19,16 +44,49 @@ const ScoreManagement = ({ onLogout }: ScoreManagementProps) => {
     navigate(`/teacher/score-management/class/${classId}`);
   };
 
-  // Mock data for the single class
-  const classes = [
-    {
-      id: 'class-10a',
-      name: 'Class 10-A',
-      subject: 'Mathematics & Science',
-      studentCount: 2,
-      description: 'Advanced Mathematics and Science class'
+  // Calculate class statistics from real data
+  const getClassStats = () => {
+    if (!allScores) {
+      return [
+        {
+          id: 'class-10a',
+          name: 'Class 10-A',
+          subject: 'Mathematics & Science',
+          studentCount: 2,
+          description: 'Advanced Mathematics and Science class'
+        }
+      ];
     }
-  ];
+
+    const studentCount = Object.keys(allScores).length;
+    
+    return [
+      {
+        id: 'class-10a',
+        name: 'Class 10-A', 
+        subject: 'All Subjects',
+        studentCount,
+        description: `Comprehensive class with ${studentCount} students`
+      }
+    ];
+  };
+
+  const classes = getClassStats();
+
+  if (loading) {
+    return (
+      <DashboardLayout 
+        title="Score Management" 
+        userRole="teacher" 
+        onLogout={onLogout}
+      >
+        <div className="flex items-center justify-center h-64">
+          <Loader className="h-8 w-8 animate-spin mr-3" />
+          <span className="text-lg">Loading scores data...</span>
+        </div>
+      </DashboardLayout>
+    );
+  }
 
   return (
     <DashboardLayout 
@@ -54,6 +112,11 @@ const ScoreManagement = ({ onLogout }: ScoreManagementProps) => {
             <p className="text-lg text-muted-foreground">
               Choose a class to view and edit student scores
             </p>
+            {error && (
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                <p className="text-red-700 text-sm">{error} - Using sample data</p>
+              </div>
+            )}
           </div>
         </div>
 

@@ -6,17 +6,20 @@ import { Card } from '@/components/ui/card';
 import { UserCircle, BookOpen } from 'lucide-react';
 
 interface LoginFormProps {
-  onLogin: (role: 'teacher' | 'student', credentials: { email: string; password: string }) => void;
+  onLogin: (role: 'teacher' | 'student', credentials: { email?: string; studentId?: string; password: string }) => void;
 }
 
 const LoginForm = ({ onLogin }: LoginFormProps) => {
   const [selectedRole, setSelectedRole] = useState<'teacher' | 'student' | null>(null);
   const [email, setEmail] = useState('');
+  const [studentId, setStudentId] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedRole) {
+    if (selectedRole === 'student') {
+      onLogin(selectedRole, { studentId, password });
+    } else if (selectedRole === 'teacher') {
       onLogin(selectedRole, { email, password });
     }
   };
@@ -78,18 +81,33 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       </div>
 
       <div className="space-y-4">
-        <div>
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            required
-            className="mt-1"
-          />
-        </div>
+        {selectedRole === 'teacher' ? (
+          <div>
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              required
+              className="mt-1"
+            />
+          </div>
+        ) : (
+          <div>
+            <Label htmlFor="studentId">Student ID</Label>
+            <Input
+              id="studentId"
+              type="text"
+              value={studentId}
+              onChange={(e) => setStudentId(e.target.value)}
+              placeholder="Enter your student ID (e.g., S001)"
+              required
+              className="mt-1"
+            />
+          </div>
+        )}
         
         <div>
           <Label htmlFor="password">Password</Label>
@@ -113,7 +131,10 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       </Button>
       
       <p className="text-center text-sm text-muted-foreground">
-        Demo credentials: any email/password combination
+        {selectedRole === 'student' ? 
+          'Use Student ID: S001 or S002 with any password' : 
+          'Demo credentials: any email/password combination'
+        }
       </p>
     </form>
   );
