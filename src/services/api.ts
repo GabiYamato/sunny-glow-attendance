@@ -74,6 +74,36 @@ export interface LoginResponse {
   role?: string;
 }
 
+export interface QRCodeRequest {
+  class_id: number;
+  teacher_id: string;
+}
+
+export interface QRCodeResponse {
+  status: string;
+  qr_code: string; // base64 image
+  qr_data: string;
+  class_id: number;
+  teacher_name: string;
+  subject: string;
+  expires_at: number;
+}
+
+export interface QRValidationRequest {
+  qr_data: string;
+  student_id: string;
+}
+
+export interface QRValidationResponse {
+  status: string;
+  message: string;
+  student_name: string;
+  student_id?: string;
+  subject?: string;
+  class_id?: number;
+  marked_at?: string;
+}
+
 export interface ApiResponse<T> {
   status: string;
   [key: string]: any;
@@ -107,6 +137,25 @@ class ApiService {
       method: 'POST',
       body: JSON.stringify(credentials),
     });
+  }
+
+  // QR Code endpoints
+  async generateQRCode(request: QRCodeRequest): Promise<QRCodeResponse> {
+    return this.fetchApi<QRCodeResponse>('/generate-qr', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+  }
+
+  async validateQRCode(request: QRValidationRequest): Promise<QRValidationResponse> {
+    return this.fetchApi<QRValidationResponse>('/validate-qr', {
+      method: 'POST',
+      body: JSON.stringify(request),
+    });
+  }
+
+  async getActiveQR(classId: number): Promise<ApiResponse<any>> {
+    return this.fetchApi<ApiResponse<any>>(`/active-qr/${classId}`);
   }
 
   // Teacher attendance endpoints

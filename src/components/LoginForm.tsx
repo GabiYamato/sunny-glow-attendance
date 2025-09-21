@@ -132,7 +132,7 @@ const LoginForm = ({ onLogin }: LoginFormProps) => {
       
       <p className="text-center text-sm text-muted-foreground">
         {selectedRole === 'student' ? 
-          'Use Student ID: S001 or S002 with any password' : 
+          'Use: gab, prabh, S001, or S002 with any password' : 
           'Demo credentials: any email/password combination'
         }
       </p>
